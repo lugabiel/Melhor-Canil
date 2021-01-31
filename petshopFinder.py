@@ -7,14 +7,14 @@ def isWeekday(epoca):
     else:
         return False
 
-class canil:
+class petshop:
     def __init__(self, nome=None, distancia=None, dinamico=None, preco=[None, None]):
         self.name     = nome
         self.distance = distancia # distancia em metros
         self.price    = preco     # price = [smallDoge, biiigDoge, FDSsmallDoge, FDSbigDoge]
         self.dynamic  = dinamico  # indica se o preco eh dinamico para FDS
         
-    def canilInfo(self):
+    def petshopInfo(self):
         print('Nome:  '+self.name)
         print('Distancia: ',self.distance)
         if self.dynamic == True:
@@ -35,26 +35,26 @@ class canil:
             total = qntDogP*self.price[0] + qntDogG*self.price[1]
         return total
 
-canil_C = canil(nome='chowchagas',distancia=800,dinamico=False,preco = [30,45])
-canil_B = canil(nome='vai rex'   ,distancia=1700,dinamico=True ,preco = [15,50,20,55])
-canil_A = canil(nome='meu canino feliz',distancia=2000,dinamico=True,preco = [20,40,20*1.2,40*1.2])
+petshop_C = petshop(nome='chowchagas',distancia=800,dinamico=False,preco = [30,45])
+petshop_B = petshop(nome='vai rex'   ,distancia=1700,dinamico=True ,preco = [15,50,20,55])
+petshop_A = petshop(nome='meu canino feliz',distancia=2000,dinamico=True,preco = [20,40,20*1.2,40*1.2])
 
-def melhorCanil(diaDhoraH,dogP,dogG):
+def melhorpetshop(diaDhoraH,dogP,dogG):
     diaUtil = isWeekday(diaDhoraH)
     orcamentos = []
-    orcamentos.append([canil_A.orcamento(dogP,dogG,diaUtil),canil_A.distance,canil_A.name])
-    orcamentos.append([canil_B.orcamento(dogP,dogG,diaUtil),canil_B.distance,canil_B.name])
-    orcamentos.append([canil_C.orcamento(dogP,dogG,diaUtil),canil_C.distance,canil_C.name])
-    nearestCanil  = 50000
+    orcamentos.append([petshop_A.orcamento(dogP,dogG,diaUtil),petshop_A.distance,petshop_A.name])
+    orcamentos.append([petshop_B.orcamento(dogP,dogG,diaUtil),petshop_B.distance,petshop_B.name])
+    orcamentos.append([petshop_C.orcamento(dogP,dogG,diaUtil),petshop_C.distance,petshop_C.name])
+    nearestpetshop  = 50000
     smallestPrice = 50000
     melhorCan = (None,None)
     while orcamentos:
         orc = orcamentos.pop()
         if orc[0] == smallestPrice:  #caso o preco seja o mesmo
-            if orc[1] < nearestCanil:#checa qual canil
-                melhorCan, smallestPrice, nearestCanil = (orc[2],orc[0]), orc[0],orc[2]
+            if orc[1] < nearestpetshop:#checa qual petshop
+                melhorCan, smallestPrice, nearestpetshop = (orc[2],orc[0]), orc[0],orc[2]
         if orc[0] < smallestPrice:
-            melhorCan, smallestPrice, nearestCanil = (orc[2],orc[0]), orc[0],orc[2]
+            melhorCan, smallestPrice, nearestpetshop = (orc[2],orc[0]), orc[0],orc[2]
     return melhorCan                  
 print('Insira dados para obter o melhor orçamento: <data> <quantidade de cães pequenos> <quantidade cães grandes>')
 print('Onde <data> tem o formato: dd/mm/aaaa')
@@ -65,6 +65,6 @@ dia, mes, ano = data.split('/')
 qntDogosP = int(pequenosDogos)
 qntDogosG = int(grandesDogos)
 diaInput = date(int(ano),int(mes),int(dia))
-canilInfo = melhorCanil(diaInput,qntDogosP,qntDogosG)
-print('Melhor canil: ', canilInfo[0],'- Valor total:  ', canilInfo[1], 'R$')
+petshopInfo = melhorpetshop(diaInput,qntDogosP,qntDogosG)
+print('Melhor petshop: ', petshopInfo[0],'- Valor total:  ', petshopInfo[1], 'R$')
 input('pressione qualquer tecla para fechar o programa')
