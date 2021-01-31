@@ -50,8 +50,8 @@ def melhorCanil(diaDhoraH,dogP,dogG):
     melhorCan = (None,None)
     while orcamentos:
         orc = orcamentos.pop()
-        if orc[0] == smallestPrice:
-            if orc[1] < nearestCanil:
+        if orc[0] == smallestPrice:  #caso o preco seja o mesmo
+            if orc[1] < nearestCanil:#checa qual canil
                 melhorCan, smallestPrice, nearestCanil = (orc[2],orc[0]), orc[0],orc[2]
         if orc[0] < smallestPrice:
             melhorCan, smallestPrice, nearestCanil = (orc[2],orc[0]), orc[0],orc[2]
