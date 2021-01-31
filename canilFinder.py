@@ -1,4 +1,12 @@
 from datetime import date
+    
+def isWeekday(data):
+    dia = data
+    if dia.weekday() < 6:
+        return True
+    else:
+        return False
+
 class canil:
     def __init__(self, nome=None, distancia=None, dinamico=None, preco=[None, None]):
         self.name     = nome
@@ -20,26 +28,58 @@ class canil:
             print('--Preco fixo todos os dias')
             print('Preco pequenos caes: ',self.price[0],'R$')
             print('Preco grandes caes:  ' ,self.price[1],'R$',f'\n')
-            
-def isWeekday():
-    dia = date(2021, 1, 31)
-    if dia.weekday() < 6:
-        return 1
-    else:
-        return 0
+    def orcamento(self,qntDogP,qntDogG,dUtil):
+        if self.dynamic == True and dUtil == True:
+            total = qntDogP*self.price[2] + qntDogG*self.price[3]
+        else:
+            total = qntDogP*self.price[0] + qntDogG*self.price[1]
+        return total
+
 
 canil_C = canil(nome='chowchagas',distancia=800,dinamico=False,preco = [30,45])
 canil_B = canil(nome='vai rex'   ,distancia=1700,dinamico=True ,preco = [15,50,20,55])
 canil_A = canil(nome='meu canino feliz',distancia=2000,dinamico=True,preco = [20,40,20*1.2,40*1.2])
 canisDisponiveis = [canil_A,canil_B,canil_C]
+'''
 print('--------------------')
 print('canis disponiveis:  ')
 for can in canisDisponiveis:
     can.canilInfo()
 print('--------------------')
+'''
+def melhorCanil(data,dogP,dogG):
+    diaUtil = isWeekday(data)
+    orcamentos = []
+    orcamentos.append([canil_A.orcamento(dogP,dogG,diaUtil),canil_A.distance,canil_A.name])
+    orcamentos.append([canil_B.orcamento(dogP,dogG,diaUtil),canil_B.distance,canil_B.name])
+    orcamentos.append([canil_C.orcamento(dogP,dogG,diaUtil),canil_C.distance,canil_C.name])
+    nearestCanil  = 50000
+    smallestPrice = 50000
+    melhorCanil = (None,None)
+    while orcamentos:
+        orc = orcamentos.pop()
+        print(orc)
+        if orc[0] == smallestPrice:
+            if orc[1] < nearestCanil:
+                melhorCanil = (orc[2],orc[0])
+        elif orc[0] < smallestPrice:
+            melhorCanil = (orc[2],orc[0])
+    print('melhore canil:',melhorCanil)
+    return melhorCanil
+                    
 
-entrada = input('insira uma data')
-print(entrada)
-print(isWeekday())
+data = date(2021, 1, 31)
+print(melhorCanil(data,7,5))
+
+
+print('Insira dados para orcamento: <data> <quantidade de cães pequenos> <quantidade cães grandes>')
+print('Onde <data> tem o formato: dd/mm/aaaa')
+print('Exemplo: 03/08/2018 3 5')
+entrada = input(f'insira e pressione enter \n')
+data, pequenosDogos, grandesDogos = entrada.split(' ')
+dia, mes, ano = data.split('/')
+print(data, pequenosDogos, grandesDogos)
+print(dia, mes, ano)
+print(isWeekday(date(int(ano),int(mes),int(dia))))
 
 
